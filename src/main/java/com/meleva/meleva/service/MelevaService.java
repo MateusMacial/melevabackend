@@ -1,46 +1,52 @@
 package com.meleva.meleva.service;
 
-import com.meleva.meleva.dto.HotelDto;
-import com.meleva.meleva.dto.MelevaDto;
-import com.meleva.meleva.dto.RequestDto;
+import com.meleva.meleva.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
 public class MelevaService {
 
     public MelevaDto getListarHoteis (RequestDto requestDto) {
-        String teste = "Teste";
+        //TODO
+        // Validar se tem dataInicial, dataFinal, zipCode, tokemAcesso
+        // Caso não tenha throw Exception
 
         String url = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + requestDto.getCidadeZipCode();
 
         RestTemplate rest = new RestTemplate();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth("ki5ngESXLEn0GePLwQCI51Gs0lap");
+        //TODO validar se tokem não está inspirado
+        //TODO criar função que valida o tokem, ela vai simplesmente retorna true, dentro da mesma uma obs sobre o motivo de nao estar validando
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(requestDto.getTokemAcesso());
         HttpEntity<String> entity = new HttpEntity<>("body", headers);
 
-        Object response = rest.exchange(url, HttpMethod.GET, entity, Object.class);
+        //TODO colocar dentro de um try catch
+        // msg de erro: ocorreu um erro durante a tentativa de fazer a requisição
+        ResponseEntity<ResponseDto> response = rest.exchange(url, HttpMethod.GET, entity, ResponseDto.class);
+
+        //TODO validar se response.getBody() != null
+        ResponseDto responseBody = response.getBody();
 
         MelevaDto melevaDto = new MelevaDto();
         melevaDto.setDataInicial(requestDto.getDataInicial());
         melevaDto.setDataFinal(requestDto.getDataFinal());
 
         List<HotelDto> hoteisDisponiveis = new ArrayList<>();
-        for (Object hotel: response
+
+        //TODO validar se responseBody.getData() != null && tem pelo menos 1 obj dentro
+        for (HotelResponseDto hotel: responseBody.getData()
              ) {
             HotelDto hotelDto = new HotelDto();
-            hotelDto.setNome("");
-            hotelDto.setEndereco("");
+            hotelDto.setNomeHotel(hotel.getName() == null ? "" : hotel.getName());
+            hotelDto.setEndecoHotel(hotel.getAddress() == null ? "" : hotel.getAddress().getCountryCode());
             hoteisDisponiveis.add(hotelDto);
         }
 

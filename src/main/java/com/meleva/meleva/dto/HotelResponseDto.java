@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HotelDto {
+public class HotelResponseDto {
     private String name;
-    private EnderecoDto address;
+    private EnderecoResponseDto address;
 }

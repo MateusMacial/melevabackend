@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class RequestDto {
     private String cidadeZipCode;
+    private String tokemAcesso;
     private String dataInicial;
     private String dataFinal;
 }

@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class EnderecoDto {
-    private List<HotelDto> data;
+public class ResponseDto {
+    private List<HotelResponseDto> data;
 }

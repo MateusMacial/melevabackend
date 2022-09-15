@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EnderecoDto {
-    
+public class EnderecoResponseDto {
+    private String countryCode;
 }
