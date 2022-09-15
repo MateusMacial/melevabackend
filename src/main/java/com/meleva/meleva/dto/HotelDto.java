@@ -1,4 +1,4 @@
-package com.melevabackend.melevabackend.dto;
+package com.meleva.meleva.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class HotelDto {
-    private String cidadeZipCode;
-    private String dataInicial;
-    private String dataFinal;
+    private String nome;
+    private String endereco;
 }
