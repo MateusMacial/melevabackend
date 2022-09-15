@@ -8,7 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class MelevaDto {
-    private String nome;
     private String dataInicial;
     private String dataFinal;
     private List<HotelDto> hoteisDisponiveis;

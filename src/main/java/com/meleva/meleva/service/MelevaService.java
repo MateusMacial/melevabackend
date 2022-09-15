@@ -1,6 +1,8 @@
 package com.meleva.meleva.service;
 
 import com.meleva.meleva.dto.HotelDto;
+import com.meleva.meleva.dto.MelevaDto;
+import com.meleva.meleva.dto.RequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,10 @@ import java.util.List;
 @Service
 public class MelevaService {
 
-    public String getListarHoteis () {
+    public MelevaDto getListarHoteis (RequestDto requestDto) {
         String teste = "Teste";
 
-        String url = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=PAR";
+        String url = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=" + requestDto.getCidadeZipCode();
 
         RestTemplate rest = new RestTemplate();
 
@@ -29,15 +31,21 @@ public class MelevaService {
 
         Object response = rest.exchange(url, HttpMethod.GET, entity, Object.class);
 
-        /*List<HotelDto> hoteisDisponiveis = new ArrayList<>();
+        MelevaDto melevaDto = new MelevaDto();
+        melevaDto.setDataInicial(requestDto.getDataInicial());
+        melevaDto.setDataFinal(requestDto.getDataFinal());
+
+        List<HotelDto> hoteisDisponiveis = new ArrayList<>();
         for (Object hotel: response
              ) {
             HotelDto hotelDto = new HotelDto();
             hotelDto.setNome("");
             hotelDto.setEndereco("");
             hoteisDisponiveis.add(hotelDto);
-        }*/
+        }
 
-        return teste;
+        melevaDto.setHoteisDisponiveis(hoteisDisponiveis);
+
+        return melevaDto;
     }
 }
