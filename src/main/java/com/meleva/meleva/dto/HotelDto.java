@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class HotelDto {
     private String nomeHotel;
-    private String endecoHotel;
+    private String enderecoHotel;
 }

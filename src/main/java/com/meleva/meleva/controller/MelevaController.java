@@ -16,11 +16,12 @@ public class MelevaController {
     @Autowired
     private MelevaService melevaService;
 
-    //TODO colocar validação na RequestDto, notNull and notBlack
     @RequestMapping(value = "/get-page", method = RequestMethod.POST)
-    public MelevaDto listarHoteis(@RequestBody RequestDto requestDto) {
-        //TODO
-        // Colocar um try cach
-        return melevaService.getListarHoteis(requestDto);
+    public MelevaDto listarHoteis(@RequestBody RequestDto requestDto) throws Exception {
+        try {
+            return melevaService.getListarHoteis(requestDto);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
